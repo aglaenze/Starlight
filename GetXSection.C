@@ -189,6 +189,9 @@ int GetXSection(string process, int year, string config, bool pbEmitter, Double_
 	t->Draw("fTrkTrkPt>>histPt", cut);
 	Int_t nCut = hist->GetEntries();
 	
+	Double_t p = (double)nCut/nEntries;
+	Double_t sigErr = p * sigTotal * sqrt(p*(1-p)/nEntries);
+	
 	// Now print the results
 	cout << endl;
 	cout << "Starlight says Sigma = " << sigTotal << " \u03BCb for " << -rapMaxInput << " < Y < " << rapMaxInput << endl;
@@ -197,7 +200,7 @@ int GetXSection(string process, int year, string config, bool pbEmitter, Double_
 	if (start) cout << "Ratio of Sigmas = " << dSigInt/sigTotal << endl;
 	
 	cout << endl;
-	cout << "So it should be Sigma (" << config << ") = " << (double)nCut/nEntries*sigTotal << " \u03BCb for " << rapMin << " < Y < " << rapMax << " and " << mMin << " GeV/c2 < M < " << mMax << " GeV/c2" << endl;
+	cout << "So it should be Sigma (" << config << ") = " << p*sigTotal << " ± " << sigErr << " \u03BCb for " << rapMin << " < Y < " << rapMax << " and " << mMin << " GeV/c2 < M < " << mMax << " GeV/c2" << endl;
 	
 	return 0;
 	

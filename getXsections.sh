@@ -22,7 +22,7 @@ echo '--> year = 2013 or 2016'
 echo -e '--> production mode =\t 1 (kIncohJpsiToMu)'
 echo -e '\t\t\t 2 (kCohJpsiToMu)'
 echo -e '\t\t\t 3 (kIncohPsi2sToMu)'
-echo -e '\t\t\t 4 (kTwoGammaToMuLow)'
+echo -e '\t\t\t 4 (kTwoGammaToMu)'
 echo -e '\t\t\t 5 (kTwoGammaToMuMedium)'
 echo '--> config = 1 (p-Pb) or 2 (Pb-p)'
 echo
@@ -65,10 +65,7 @@ process=kIncohPsi2sToMu
 Pb_gamma_emitter=true
 elif [ $2 = 4 ]
 then
-process=kTwoGammaToMuLow
-elif [ $2 = 5 ]
-then
-process=kTwoGammaToMuMedium
+process=kTwoGammaToMu
 else
 errorMessage
 fi
@@ -89,12 +86,12 @@ echo Process: $process
 echo 'Configuration' $config
 echo
 
-mMin=1.3
-mMax=2.3
+mMin=3.8
+mMax=5.0
 rapMin=2.5
 rapMax=4
 clean
-if test -f files/$process/tree-$year-$config.root ; then
+if ! test -f files/$process/tree-$year-$config.root ; then
 root -l -q "ReadOutput.C(\"$process\", $year, \"$config\")"
 fi
 clean

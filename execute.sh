@@ -30,7 +30,7 @@ echo '--> year = 2013 or 2016'
 echo -e '--> production mode =\t 1 (kIncohJpsiToMu)'
 echo -e '\t\t\t 2 (kCohJpsiToMu)'
 echo -e '\t\t\t 3 (kIncohPsi2sToMu)'
-echo -e '\t\t\t 4 (kTwoGammaToMuLow)'
+echo -e '\t\t\t 4 (kTwoGammaToMu)'
 echo '--> config = 1 (p-Pb) or 2 (Pb-p)'
 echo
 exit
@@ -126,13 +126,13 @@ W_N_BINS=20
 RND_SEED=578537
 elif [ $2 = 4 ]
 then
-process=kTwoGammaToMuLow
+process=kTwoGammaToMu
 PROD_MODE=1
 PROD_PID=13
 W_MAX=5.0
-W_MIN=1.0
+W_MIN=0.8
 #W_N_BINS=$(bc <<< "($W_MAX - $W_MIN)*10+1")
-W_N_BINS=160
+W_N_BINS=169
 RND_SEED=912665125
 #echo $W_N_BINS
 else
@@ -173,6 +173,7 @@ baseFileName=slight-$year-$process-$config
 slightIn2="/Users/aglaenzer/Softwares/Starlight/build/$baseFileName.in"
 slightIn="/Users/aglaenzer/Softwares/Starlight/build/slight.in"
 slightOut="/Users/aglaenzer/Softwares/Starlight/build/$baseFileName.out"
+outputFile="/Users/aglaenzer/Softwares/Starlight/build/output-$year-$config.txt"
 
 if test -f $slightIn;
 then
@@ -186,8 +187,6 @@ if ! test -d $outputFolder ; then
 mkdir $outputFolder
 fi
 
-outputFile=${outputFolder}/output-$year-$config.txt
-
 
 if [ $runStarlight = 1 ]; then
 echo 'Writing in' $outputFile
@@ -197,8 +196,9 @@ echo 'Running Starlight...'
 wait
 echo 'Done'
 cd $dir
-mv "$slightIn2" "$outputFolder/slight-$year-$config.in"
-mv "$slightOut" "$outputFolder/slight-$year-$config.out"
+mv $slightIn2 "$outputFolder/slight-$year-$config.in"
+mv $slightOut "$outputFolder/slight-$year-$config.out"
+mv $outputFile "${outputFolder}/output-$year-$config.txt"
 #mv $slightIn2 $outputFolder/
 #mv $slightOut $outputFolder/
 fi
