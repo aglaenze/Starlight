@@ -41,7 +41,7 @@ TGraph* CreateTGraph( const std::vector<Double_t>& x, const std::vector<Double_t
 int GetXSection(string process, int year, string config, bool pbEmitter, Double_t mMin, Double_t mMax, Double_t rapMin = 2.5, Double_t rapMax = 4) {
 	
 	bool twok16 = (year==2016);
-
+	
 	
 	//if (!twok16 && config == "Pb-p") {rapMin = 2.6; rapMax = 3.6;}
 	
@@ -176,21 +176,24 @@ int GetXSection(string process, int year, string config, bool pbEmitter, Double_
 	}
 	else {cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl; return -1;}
 	
-	
-	TCut cut = Form("fTrkTrkM>%f && fTrkTrkM<%f && fTrkTrkY > %f && fTrkTrkY < %f", mMin, mMax, rapMin, rapMax);
+	//TCut rapCut = Form("fTrkTrkY > %f && fTrkTrkY < %f", rapMin, rapMax;
+	TCut rapCut = Form("!(fTrkTrkY < %f || fTrkTrkY > %f)", rapMin, rapMax);
+	//TCut massCut = Form("fTrkTrkM>%f && fTrkTrkM<%f", mMin, mMax);
+	TCut massCut = Form("!(fTrkTrkM<%f || fTrkTrkM>%f)", mMin, mMax);
+	TCut cut = rapCut + massCut;
 	TString rootFileName = Form("files/%s/tree-%d-%s.root", process.c_str(), year, config.c_str());
 	//cout << rootFileName << endl;
 	//return 0;
 	TFile* f = TFile::Open(rootFileName, "READ");
 	TTree* t = (TTree*)f->Get("fAnaTree");
 	Int_t nEntries = t->GetEntries();
-	TH1F* hist = new TH1F("histPt", "histPt", 1000, 0, 20);
+	TH1F* hist = new TH1F("histPt", "histPt", 1000, -10, 100);
 	
 	t->Draw("fTrkTrkPt>>histPt", cut);
 	Int_t nCut = hist->GetEntries();
 	
 	Double_t p = (double)nCut/nEntries;
-	Double_t sigErr = p * sigTotal * sqrt(p*(1-p)/nEntries);
+	Double_t sigErr = sigTotal * sqrt(p*(1-p)/nEntries);
 	
 	// Now print the results
 	cout << endl;

@@ -29,7 +29,7 @@ using namespace std;
 
 void TrkTrkKine(Int_t gpid[2], Double_t px[2], Double_t py[2], Double_t pz[2], Double_t& fTrkTrkPt, Double_t& fTrkTrkPhi, Double_t& fTrkTrkY, Double_t& fTrkTrkM, Double_t& fTrkPt1, Double_t& fTrkPt2, Double_t& fTrkEta1, Double_t& fTrkEta2, Double_t& fTrkPhi1, Double_t& fTrkPhi2, Double_t& fTrkQ1, Double_t& fTrkQ2) {
 	
-	Double_t MuonMass = 0.105658; // GeV/c^2
+	Double_t MuonMass = 0.105658389; // GeV/c^2
 	
 	Int_t posIdx, negIdx;
 	

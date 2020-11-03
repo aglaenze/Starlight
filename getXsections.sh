@@ -1,5 +1,12 @@
 #!/bin/bash
 
+## Variables
+mMin=2.7
+mMax=3.4
+
+rapMin=2.5
+rapMax=4
+
 clean()
 {
 filesToDelete="*.so *.d *.pcm *ACLiC* *.in *.out *dict*"
@@ -23,7 +30,7 @@ echo -e '--> production mode =\t 1 (kIncohJpsiToMu)'
 echo -e '\t\t\t 2 (kCohJpsiToMu)'
 echo -e '\t\t\t 3 (kIncohPsi2sToMu)'
 echo -e '\t\t\t 4 (kTwoGammaToMu)'
-echo -e '\t\t\t 5 (kTwoGammaToMuMedium)'
+echo -e '\t\t\t 5 (kCohJpsiToMubis) --> production mode = 3 instead of 2'
 echo '--> config = 1 (p-Pb) or 2 (Pb-p)'
 echo
 exit
@@ -66,6 +73,10 @@ Pb_gamma_emitter=true
 elif [ $2 = 4 ]
 then
 process=kTwoGammaToMu
+elif [ $2 = 5 ]
+then
+process=kCohJpsiToMuBis
+Pb_gamma_emitter=false
 else
 errorMessage
 fi
@@ -86,10 +97,12 @@ echo Process: $process
 echo 'Configuration' $config
 echo
 
-mMin=3.8
-mMax=5.0
-rapMin=2.5
-rapMax=4
+if [ $2 == 1 ] || [ $2 == 2 ]
+then
+mMin=2.5
+mMax=3.5
+fi
+
 clean
 if ! test -f files/$process/tree-$year-$config.root ; then
 root -l -q "ReadOutput.C(\"$process\", $year, \"$config\")"
