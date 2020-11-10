@@ -3,7 +3,7 @@
 ## How to use:
 
 - First, generate a Starlight simulation that will run over one specific process
-```./execute.sh $year $processNumber $config```
+```./runStarlight.sh $year $processNumber $config```
 where $year can be 2013 or 2016 (it will change the gamma of the colliding ions, they are written to match ALICE data)
 $processNumber can be 1 to 4
 $config is 1 (p-Pb) or 2 (Pb-p)
