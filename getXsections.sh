@@ -88,6 +88,9 @@ config="p-Pb"
 elif [ $3 = 2 ]
 then
 config="Pb-p"
+elif [ $3 = 3 ]
+then
+config="Pb-Pb"
 else
 errorMessage
 fi
@@ -97,7 +100,7 @@ echo Process: $process
 echo 'Configuration' $config
 echo
 
-if [ $2 == 1 ] || [ $2 == 2 ]
+if [ $2 == 1 ] || [ $2 == 2 ] || [ $2 == 5 ]
 then
 mMin=2.5
 mMax=3.5

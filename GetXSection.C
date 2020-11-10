@@ -47,7 +47,7 @@ int GetXSection(string process, int year, string config, bool pbEmitter, Double_
 	
 	Double_t step = 0.02;
 	Double_t factor = 1;
-	if (process == "kCohJpsiToMu") factor = 0.001;
+	if (process == "kCohJpsiToMu" && config != "Pb-Pb") factor = 0.001;
 	
 	TString filename = Form("files/%s/output-%d-%s.txt", process.c_str(), year, config.c_str());
 	

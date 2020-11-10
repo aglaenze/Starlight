@@ -32,7 +32,7 @@ echo -e '\t\t\t 2 (kCohJpsiToMu)'
 echo -e '\t\t\t 3 (kIncohPsi2sToMu)'
 echo -e '\t\t\t 4 (kTwoGammaToMu)'
 echo -e '\t\t\t 5 (kCohJpsiToMubis) --> production mode = 3 instead of 2'
-echo '--> config = 1 (p-Pb) or 2 (Pb-p)'
+echo '--> config = 1 (p-Pb) or 2 (Pb-p) or 3 (Pb-Pb)'
 echo
 exit
 }
@@ -94,10 +94,10 @@ elif [ $1 = 2016 ]
 then
 #BEAM_1=6927.0
 #BEAM_1=6929.6
-BEAM_1=6928
+BEAM_1=6928		# p
 #BEAM_2=2731.1
 #BEAM_2=2751.9
-BEAM_2=2745
+BEAM_2=2745		# Pb
 else
 errorMessage
 fi
@@ -177,6 +177,15 @@ BEAM_1_Z=82
 BEAM_1_A=208
 BEAM_2_Z=1
 BEAM_2_A=1
+elif [ $3 = 3 ]
+then
+config="Pb-Pb"
+BEAM_1_GAMMA=$BEAM_2
+BEAM_2_GAMMA=$BEAM_2
+BEAM_1_Z=82
+BEAM_1_A=208
+BEAM_2_Z=82
+BEAM_2_A=208
 else
 errorMessage
 fi
